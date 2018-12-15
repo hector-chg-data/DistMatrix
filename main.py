@@ -1,21 +1,22 @@
 #!/usr/bin/env python3
 
-import pandas as pd 					# read csv (deprecated, too slow)
-import numpy as np 						# arrange data
-import csv								# read csv (GOOD one)
+import pandas as pd 	# read csv (deprecated, too slow)
+import numpy as np 		# arrange data
+import csv				# read csv (GOOD one)
 
 import googlemaps 						# to obtain travel times
 import geopy 							# easier loc wrangling
 from geopy.geocoders import Nominatim 	# from address to coordinates
 
-from itertools import tee				# not used by the moment
-import time 							# to measure code execution speeds
+from itertools import tee	# not used by the moment
+import time 				# to measure code execution speeds
 
 # Setting working directory:
 dirClases="/home/hector/Dropbox/Proyectos/ClasesParticulares/old/2018-2019/csvs/"
 csvFile = dirClases + "Alumnos.csv"
+# Calling APIKey ubication:
 dirAPI = "/home/hector/Dropbox/DOCUMENTOS IMPORTANTES/Seguridad/"
-APIFile = dirAPI + "API_Key.txt"
+APIFile = dirAPI + "API_Key-DistMatrix-maps.txt"
 
 
 ## Read and load csv with pandas. Time it:
@@ -29,7 +30,6 @@ APIFile = dirAPI + "API_Key.txt"
 
 # Read and load csv with csv. Time it:
 t_i_csv = time.time()
-# My code:
 with open(csvFile, "r") as dest_f:
 	data_iter = csv.reader(dest_f, delimiter = ",")
 	data = [data for data in data_iter]
@@ -55,7 +55,12 @@ print("Distancias:\n", distancias, "\n\n")
 tiempos = Alumnos[:, 3]
 print("Tiempos:\n", tiempos, "\n\n")
 
-
+# Loading API
+with open(APIFile) as f:
+	content = f.readlines()
+	content = [i.strip() for i in content]
+APIKey = content[0]
+print(APIKey)
 
 # Making connection to maps API. Time it:
 t_i_gmapsAPI = time.time()
