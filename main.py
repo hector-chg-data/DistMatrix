@@ -48,10 +48,12 @@ Alumnos = Alumnos[~(Alumnos == "").all(axis=1)] # removed those rows that are no
 print("Alumnos de los que poseo datos:\n", Alumnos[:, 0], "\n\n")
 print("Dataset final:\n", Alumnos, "\n\n")
 
+number_alumnos = len(Alumnos)
+print("Cantidad de Alumnos:\n", , "\n")
 direcciones = Alumnos[:, 1]
-print("Direcciones:\n", direcciones, "\n\n")
+print("Direcciones:\n", direcciones, "\n")
 distancias = Alumnos[:, 2]
-print("Distancias:\n", distancias, "\n\n")
+print("Distancias:\n", distancias, "\n")
 tiempos = Alumnos[:, 3]
 print("Tiempos:\n", tiempos, "\n\n")
 
@@ -63,11 +65,11 @@ APIKey = content[0]
 
 # Making connection to maps API. Time it:
 t_i_gmapsAPI = time.time()
-#gmaps = googlemaps.Client(key=API_key)
+#gmaps = googlemaps.Client(key=APIKey)
 t_f_gmapsAPI = time.time()
 t_gmapsAPI = t_f_gmapsAPI - t_i_gmapsAPI
 print("Time elapsed connecting to google maps API:\n", t_gmapsAPI, "seconds.\n\n")
-print(len(Alumnos))
+
 
 
 
@@ -76,9 +78,20 @@ print(len(Alumnos))
 #	next(b, None)
 #	return zip(a, b)
 	
-#def Direction2Coordinates(location):
-#	try:
-#		sdfs
+def Coordinates_for(address):
+	geocoder = Nominatim()
+	try:
+		location = geocoder.geocode(address)
+	except GeoCoderTimedOut:
+		return Response(
+			"Geocoder service currently unavailable. Try again later."
+			status = status.HTTP_503_SERVICE_UNAVAILABLE
+		)
+		
+	return Response({
+		"latitude": float("{0:.4f}".format(location.latitude)),
+		"longitude": float("{0:.4f}".format(location.longitude)),
+	})
 #	geolocator = Nominatim(user_agent="app_name")
 #	location = geolocator.geocode(location)
 #	return (location.latitude, location.longitude)
