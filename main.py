@@ -60,7 +60,6 @@ with open(APIFile) as f:
 	content = f.readlines()
 	content = [i.strip() for i in content]
 APIKey = content[0]
-print(APIKey)
 
 # Making connection to maps API. Time it:
 t_i_gmapsAPI = time.time()
@@ -68,6 +67,7 @@ t_i_gmapsAPI = time.time()
 t_f_gmapsAPI = time.time()
 t_gmapsAPI = t_f_gmapsAPI - t_i_gmapsAPI
 print("Time elapsed connecting to google maps API:\n", t_gmapsAPI, "seconds.\n\n")
+print(len(Alumnos))
 
 
 
@@ -85,7 +85,8 @@ print("Time elapsed connecting to google maps API:\n", t_gmapsAPI, "seconds.\n\n
 
 #type_of_transport = input()
 
-#matrix = np.zeros(len(Alumnos), len(Alumnos))
+empty_matrix = np.zeros(shape=(len(Alumnos)+1, len(Alumnos)+1))
+print(empty_matrix.shape)
 #for i in range(len(Alumnos)):
 #	for j in range(len(Alumnos)):
 #		LatOrigin = Direction2Coordinates()
